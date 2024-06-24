@@ -43,14 +43,18 @@ exports.post = [
     .withMessage("Password can have max. 100 characters"),
   
   asyncHandler(async (req, res) => {
+
+    req.body.memberstatus = req.body.memberstatus !== undefined;
+    req.body.isAdmin = req.body.isAdmin !== undefined;
+
     const errors = validationResult(req);
 
     const user = new User({
       username: req.body.username,
       firstname: req.body.firstname,
       lastname: req.body.lastname,
-      memberstatus: memberstatus,
-      isAdmin: isAdmin,
+      memberstatus: req.body.memberstatus,
+      isAdmin: req.body.isAdmin,
       hash: null
     });
 
@@ -63,13 +67,8 @@ exports.post = [
     };
 
     await bcrypt.hash(req.body.password, 10, async (err, generatedHash) => {
-      user.hash = hash;
+      user.hash = generatedHash;
+      await user.save();
+      res.redirect("/");   
     });
-
-
-
-    //await user.save();
-    res.redirect("/");
-
-    res.send("To be implemented!");
-})]
+})];
