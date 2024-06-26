@@ -9,6 +9,8 @@ router.post("/logIn", index_controller.logIn);
 
 router.get("/logOut", index_controller.logOut);
 
+router.post("/postMsg", index_controller.postMsg);
+
 module.exports = router;
 
 /*

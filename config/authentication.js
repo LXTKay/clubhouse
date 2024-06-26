@@ -7,10 +7,6 @@ const bcrypt = require("bcryptjs");
 async function verify(username, password, done) {
   try {
     const user = await User.findOne({ username: username });
-    console.log(`Inside authenticate function: \n
-    username: ` + username + `\n
-    password: ` + password + `\n
-    user: ` + user);
 
     if (!user) {
       console.log("Wrong username")

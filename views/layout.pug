@@ -24,4 +24,10 @@ html
           a(href="/signUp") 
             button(type="button") Sign Up
 
+      if errors
+        ul
+          for error in errors
+            li!= error.msg
+
+
     block content
