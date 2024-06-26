@@ -9,6 +9,7 @@ const asyncHandler = require("express-async-handler");
 const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo");
 const session = require("express-session");
+const passport = require("passport");
 
 
 const indexRouter = require('./routes/index');
@@ -45,6 +46,9 @@ app.use(session({
   }),
   cookie: {maxAge: 1000 * 60 * 60 * 24}
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 require("./config/authentication");
 

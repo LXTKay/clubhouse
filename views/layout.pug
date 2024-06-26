@@ -5,4 +5,23 @@ html
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    block header 
+      .header(style="background-color: yellow")
+        h1(style="display: inline") Clubhouse
+
+        if user
+          p(style="display: inline") Welcome #{user.username}
+          a(href="/logOut") 
+            button(type="button") Log Out
+        else
+          form(action="/logIn", method="post" style="display: inline") 
+            label(for="username") Username: 
+            input#username(name="username" type="text" required)
+            label(for="password") Password: 
+            input#password(name="password" type="password" required)
+            button(type="submit") Log In!
+
+          a(href="/signUp") 
+            button(type="button") Sign Up
+
     block content
