@@ -44,17 +44,14 @@ exports.post = [
   
   asyncHandler(async (req, res) => {
 
-    req.body.memberstatus = req.body.memberstatus !== undefined;
-    req.body.isAdmin = req.body.isAdmin !== undefined;
-
     const errors = validationResult(req);
 
     const user = new User({
       username: req.body.username,
       firstname: req.body.firstname,
       lastname: req.body.lastname,
-      memberstatus: req.body.memberstatus,
-      isAdmin: req.body.isAdmin,
+      memberstatus: false,
+      isAdmin: false,
       hash: null
     });
 

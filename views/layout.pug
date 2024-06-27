@@ -13,6 +13,16 @@ html
           p(style="display: inline") Welcome #{user.username}
           a(href="/logOut") 
             button(type="button") Log Out
+          if !user.memberstatus && !user.isAdmin
+            form(action="/activateCode", method="post") 
+              label(for="code") Secret Code:
+              input#code(type="text" name="code" required)
+              button(type="submit") Submit
+          else 
+            if user.isAdmin
+              p you are an admin!
+            else if user.memberstatus
+              p You are a member!
         else
           form(action="/logIn", method="post" style="display: inline") 
             label(for="username") Username: 

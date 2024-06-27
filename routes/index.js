@@ -11,6 +11,8 @@ router.get("/logOut", index_controller.logOut);
 
 router.post("/postMsg", index_controller.postMsg);
 
+router.post("/activateCode", index_controller.activateCode);
+
 module.exports = router;
 
 /*

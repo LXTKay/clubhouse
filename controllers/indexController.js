@@ -1,3 +1,4 @@
+require('dotenv').config();
 const asyncHandler = require("express-async-handler");
 const passport = require("passport");
 const { body, validationResult } = require("express-validator");
@@ -61,6 +62,41 @@ exports.postMsg = [
     });
 
     await msg.save();
+    res.redirect("/");
+  })
+];
+
+exports.activateCode = [
+  body("code")
+    .trim()
+    .escape(),
+
+  asyncHandler(async (req, res) => {
+    const error = validationResult(req);
+    const memberCode = process.env.MEMBERCODE;
+    const adminCode = process.env.ADMINCODE;
+
+    const user = await User.findById(req.user._id);
+
+    if (req.body.code === memberCode) {
+      user.memberstatus = true;
+    } else if (req.body.code === adminCode) {
+      user.isAdmin = true;
+    } else {
+      error.array().push({ msg: "Invalid code." });
+    }
+
+    if (!error.isEmpty()) {
+      res.render("index", {
+        title: "Home",
+        user: req.user,
+        errors: error.array(),
+      });
+      return;
+    }
+
+    await user.save();
+
     res.redirect("/");
   })
 ];

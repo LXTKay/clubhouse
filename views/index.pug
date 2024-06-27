@@ -1,21 +1,28 @@
 extends layout
 
-block content
-  form(action="/postMsg", method="post") 
-    div
-      label(for="msgTitle") Title:
-      input#msgTitle(type="text", name="msgTitle" style="display: block"
-        required minlength="1" maxlength="100")
-    div
-      label(for="/msgBody") Message:
-      textarea#msgBody(type="text", name="msgBody" style="display: block"
-        required minlength="1" maxlength="200")
-    button(type="submit") Submit
+block content 
+  if user !== undefined
+    form(action="/postMsg", method="post") 
+      div
+        label(for="msgTitle") Title:
+        input#msgTitle(type="text", name="msgTitle" style="display: block"
+          required minlength="1" maxlength="100")
+      div
+        label(for="/msgBody") Message:
+        textarea#msgBody(type="text", name="msgBody" style="display: block"
+          required minlength="1" maxlength="200")
+      button(type="submit") Submit
   
   for msg in messages
     div(style="border: 1px solid black; padding: 1rem")
-      p(style="display: inline")= msg.datestring
-      a(href="#{msg._id}/delete" style="display: inline; padding-left: 1rem") Delete
-      h3 #{msg.author} : #{msg.title}
-      p= msg.content
-      
+      if user === undefined || (user.memberstatus == false && user.isAdmin == false)
+        p(style="display: inline") Date
+        h3 Author : #{msg.title}
+        p= msg.content
+      else if user.memberstatus || user.isAdmin
+        p(style="display: inline")=msg.datestring
+        if user.isAdmin
+          a(href="#{msg._id}/delete" style="display: inline; padding-left: 1rem") Delete
+        h3 #{msg.author} : #{msg.title}
+        p= msg.content
+        
