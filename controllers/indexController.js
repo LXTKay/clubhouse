@@ -100,3 +100,9 @@ exports.activateCode = [
     res.redirect("/");
   })
 ];
+
+exports.deleteMsg = asyncHandler(async (req, res) => {
+  console.log("deleting")
+  await Message.findByIdAndDelete(req.params.id);
+  res.redirect("/");
+})

@@ -22,7 +22,7 @@ block content
       else if user.memberstatus || user.isAdmin
         p(style="display: inline")=msg.datestring
         if user.isAdmin
-          a(href="#{msg._id}/delete" style="display: inline; padding-left: 1rem") Delete
+          a(href=msg._id + "/delete" style="display: inline; padding-left: 1rem") Delete
         h3 #{msg.author} : #{msg.title}
         p= msg.content
         

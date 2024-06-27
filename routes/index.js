@@ -13,6 +13,8 @@ router.post("/postMsg", index_controller.postMsg);
 
 router.post("/activateCode", index_controller.activateCode);
 
+router.get("/:id/delete", index_controller.deleteMsg);
+
 module.exports = router;
 
 /*
